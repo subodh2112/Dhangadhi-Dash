@@ -1,0 +1,70 @@
+{
+  "name": "RiderWallet",
+  "type": "object",
+  "properties": {
+    "rider_id": {
+      "type": "string"
+    },
+    "rider_name": {
+      "type": "string"
+    },
+    "total_earnings": {
+      "type": "number",
+      "default": 0
+    },
+    "available_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "withdrawn_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "pending_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "last_updated": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "rider_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.rider_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.rider_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

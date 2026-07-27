@@ -1,0 +1,91 @@
+{
+  "name": "Referral",
+  "type": "object",
+  "properties": {
+    "referrer_id": {
+      "type": "string"
+    },
+    "referrer_name": {
+      "type": "string"
+    },
+    "referral_code": {
+      "type": "string"
+    },
+    "referred_email": {
+      "type": "string"
+    },
+    "referred_user_id": {
+      "type": "string"
+    },
+    "referred_user_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "rewarded"
+      ],
+      "default": "pending"
+    },
+    "reward_points": {
+      "type": "number",
+      "default": 50
+    },
+    "reward_amount": {
+      "type": "number",
+      "default": 50
+    },
+    "reward_type": {
+      "type": "string",
+      "enum": [
+        "points",
+        "coupon",
+        "cashback"
+      ],
+      "default": "points"
+    },
+    "influencer_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "referrer_id",
+    "referred_email"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.referrer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.referrer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

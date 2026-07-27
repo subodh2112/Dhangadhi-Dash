@@ -1,0 +1,146 @@
+{
+  "name": "SupportCall",
+  "type": "object",
+  "properties": {
+    "call_id": {
+      "type": "string"
+    },
+    "caller_id": {
+      "type": "string"
+    },
+    "caller_name": {
+      "type": "string"
+    },
+    "caller_type": {
+      "type": "string",
+      "enum": [
+        "customer",
+        "rider",
+        "merchant"
+      ],
+      "default": "customer"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "order_context": {
+      "type": "string",
+      "description": "JSON string of order details for agent visibility"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "connecting",
+        "ringing",
+        "connected",
+        "ended",
+        "missed",
+        "cancelled"
+      ],
+      "default": "queued"
+    },
+    "queue_position": {
+      "type": "number"
+    },
+    "estimated_wait_seconds": {
+      "type": "number"
+    },
+    "started_at": {
+      "type": "string"
+    },
+    "connected_at": {
+      "type": "string"
+    },
+    "ended_at": {
+      "type": "string"
+    },
+    "duration_seconds": {
+      "type": "number"
+    },
+    "end_reason": {
+      "type": "string"
+    },
+    "call_type": {
+      "type": "string",
+      "enum": [
+        "incoming",
+        "callback"
+      ],
+      "default": "incoming"
+    },
+    "scheduled_time": {
+      "type": "string",
+      "description": "Preferred callback time"
+    },
+    "callback_note": {
+      "type": "string"
+    },
+    "sdp_offer": {
+      "type": "string",
+      "description": "WebRTC SDP offer from the caller (JSON stringified RTCSessionDescription)"
+    },
+    "sdp_answer": {
+      "type": "string",
+      "description": "WebRTC SDP answer from the agent (JSON stringified RTCSessionDescription)"
+    }
+  },
+  "required": [
+    "caller_id",
+    "caller_name",
+    "caller_type"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.caller_id": "{{user.id}}"
+        },
+        {
+          "data.agent_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "support_agent"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.caller_id": "{{user.id}}"
+        },
+        {
+          "data.agent_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "support_agent"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "default": "user"
+    },
+    "roles": {
+      "type": "string",
+      "description": "Comma-separated list of all assigned roles: user(customer), merchant, rider, admin"
+    },
+    "store_id": {
+      "type": "string"
+    },
+    "merchant_id": {
+      "type": "string",
+      "description": "Store ID linked to merchant profile"
+    },
+    "merchant_code": {
+      "type": "string",
+      "description": "Merchant code e.g. DD-MCH-XXXX"
+    },
+    "rider_id": {
+      "type": "string",
+      "description": "Rider record ID linked to rider profile"
+    },
+    "rider_code": {
+      "type": "string",
+      "description": "Rider code e.g. DD-RDR-XXXX"
+    },
+    "wallet_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "reward_points": {
+      "type": "number",
+      "default": 0
+    },
+    "suspended_roles": {
+      "type": "string",
+      "description": "Comma-separated list of suspended role keys"
+    },
+    "referral_code": {
+      "type": "string"
+    },
+    "referred_by": {
+      "type": "string"
+    },
+    "staff_role": {
+      "type": "string",
+      "description": "Staff role key e.g. marketing_manager \u2014 only set for admin staff"
+    },
+    "department": {
+      "type": "string",
+      "description": "Department the staff member belongs to"
+    },
+    "staff_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "inactive"
+      ],
+      "default": "active"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "asana",
+  "scopes": [
+    "users:read"
+  ]
+}

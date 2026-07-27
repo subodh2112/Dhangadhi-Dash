@@ -1,0 +1,115 @@
+{
+  "name": "Campaign",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_name": {
+      "type": "string"
+    },
+    "campaign_type": {
+      "type": "string",
+      "enum": [
+        "discount",
+        "cashback",
+        "free_delivery",
+        "referral",
+        "seasonal_offer"
+      ],
+      "default": "discount"
+    },
+    "target_audience": {
+      "type": "string",
+      "enum": [
+        "all_users",
+        "new_users",
+        "inactive_users",
+        "specific_area"
+      ],
+      "default": "all_users"
+    },
+    "description": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string"
+    },
+    "end_date": {
+      "type": "string"
+    },
+    "budget": {
+      "type": "number"
+    },
+    "spent": {
+      "type": "number",
+      "default": 0
+    },
+    "discount_value": {
+      "type": "number"
+    },
+    "coupon_code": {
+      "type": "string"
+    },
+    "target_area": {
+      "type": "string"
+    },
+    "festival_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "paused",
+        "completed"
+      ],
+      "default": "draft"
+    },
+    "total_views": {
+      "type": "number",
+      "default": 0
+    },
+    "total_clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "orders_generated": {
+      "type": "number",
+      "default": 0
+    },
+    "revenue_generated": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "campaign_name",
+    "campaign_type",
+    "start_date",
+    "end_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

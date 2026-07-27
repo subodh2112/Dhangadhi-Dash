@@ -1,0 +1,84 @@
+{
+  "name": "MerchantDispute",
+  "type": "object",
+  "properties": {
+    "dispute_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "order_number": {
+      "type": "string"
+    },
+    "merchant_id": {
+      "type": "string"
+    },
+    "store_name": {
+      "type": "string"
+    },
+    "dispute_type": {
+      "type": "string",
+      "enum": [
+        "incorrect_cancellation",
+        "payment_mismatch",
+        "customer_complaint",
+        "delivery_issue",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "evidence_urls": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "filed",
+        "under_review",
+        "resolved",
+        "rejected"
+      ],
+      "default": "filed"
+    },
+    "resolution": {
+      "type": "string"
+    },
+    "admin_note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "dispute_type",
+    "description"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

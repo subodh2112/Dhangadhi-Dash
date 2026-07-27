@@ -1,0 +1,108 @@
+{
+  "name": "StaffInvitation",
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "Secure unique invitation token"
+    },
+    "staff_code": {
+      "type": "string",
+      "description": "Unique staff login code e.g. DD-STAFF-XXXX"
+    },
+    "password": {
+      "type": "string",
+      "description": "Password set by admin for the staff account"
+    },
+    "email": {
+      "type": "string"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Invitee's name as entered by admin"
+    },
+    "staff_role": {
+      "type": "string",
+      "description": "Role key e.g. marketing_manager"
+    },
+    "role_display_name": {
+      "type": "string",
+      "description": "Human-readable role name at invite time"
+    },
+    "department": {
+      "type": "string"
+    },
+    "permissions_snapshot": {
+      "type": "string",
+      "description": "JSON array of permission keys at invite time"
+    },
+    "invited_by_id": {
+      "type": "string"
+    },
+    "invited_by_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "opened",
+        "accepted",
+        "revoked",
+        "expired"
+      ],
+      "default": "pending"
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "ISO date when invitation expires"
+    },
+    "opened_at": {
+      "type": "string"
+    },
+    "accepted_at": {
+      "type": "string"
+    },
+    "revoked_at": {
+      "type": "string"
+    },
+    "revoked_by": {
+      "type": "string"
+    },
+    "accepted_user_id": {
+      "type": "string"
+    },
+    "personal_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "token",
+    "staff_code",
+    "email",
+    "staff_role",
+    "expires_at"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

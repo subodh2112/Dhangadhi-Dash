@@ -1,0 +1,176 @@
+{
+  "name": "MerchantApplication",
+  "type": "object",
+  "properties": {
+    "application_number": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "pan_number": {
+      "type": "string"
+    },
+    "business_registration_number": {
+      "type": "string"
+    },
+    "business_address": {
+      "type": "string"
+    },
+    "google_maps_location": {
+      "type": "string"
+    },
+    "store_category": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "banner_url": {
+      "type": "string"
+    },
+    "media_gallery": {
+      "type": "string",
+      "description": "JSON array of media items: [{url, type, caption}]"
+    },
+    "registration_certificate_url": {
+      "type": "string"
+    },
+    "pan_certificate_url": {
+      "type": "string"
+    },
+    "citizenship_front_url": {
+      "type": "string"
+    },
+    "citizenship_back_url": {
+      "type": "string"
+    },
+    "bank_details": {
+      "type": "string"
+    },
+    "applicant_type": {
+      "type": "string",
+      "enum": [
+        "merchant",
+        "rider"
+      ],
+      "default": "merchant"
+    },
+    "vehicle_type": {
+      "type": "string"
+    },
+    "license_number": {
+      "type": "string"
+    },
+    "license_front_url": {
+      "type": "string"
+    },
+    "license_back_url": {
+      "type": "string"
+    },
+    "vehicle_bluebook_url": {
+      "type": "string"
+    },
+    "number_plate": {
+      "type": "string"
+    },
+    "insurance_url": {
+      "type": "string"
+    },
+    "emergency_contact": {
+      "type": "string"
+    },
+    "profile_photo_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "account_created"
+      ],
+      "default": "pending"
+    },
+    "internal_notes": {
+      "type": "string"
+    },
+    "requested_documents": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "reviewed_at": {
+      "type": "string"
+    },
+    "reviewed_by": {
+      "type": "string"
+    },
+    "temporary_username": {
+      "type": "string"
+    },
+    "temporary_password": {
+      "type": "string"
+    },
+    "assigned_store_id": {
+      "type": "string"
+    },
+    "is_suspended": {
+      "type": "boolean",
+      "default": false
+    },
+    "merchant_code": {
+      "type": "string"
+    },
+    "rider_code": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "business_name",
+    "owner_name",
+    "phone_number",
+    "email",
+    "pan_number",
+    "business_address",
+    "store_category"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

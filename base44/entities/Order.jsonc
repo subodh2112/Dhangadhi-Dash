@@ -1,0 +1,224 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "order_number": {
+      "type": "string"
+    },
+    "checkout_group_id": {
+      "type": "string",
+      "description": "Links split orders from a single multi-store checkout"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "preparing",
+        "ready_for_pickup",
+        "rider_assigned",
+        "picked_up",
+        "on_the_way",
+        "delivered",
+        "rejected",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "items": {
+      "type": "string"
+    },
+    "store_name": {
+      "type": "string"
+    },
+    "store_id": {
+      "type": "string"
+    },
+    "merchant_id": {
+      "type": "string"
+    },
+    "delivery_address": {
+      "type": "string"
+    },
+    "rider_name": {
+      "type": "string"
+    },
+    "rider_id": {
+      "type": "string"
+    },
+    "rider_lat": {
+      "type": "number"
+    },
+    "rider_lng": {
+      "type": "number"
+    },
+    "pickup_time": {
+      "type": "string"
+    },
+    "delivery_started_time": {
+      "type": "string"
+    },
+    "delivered_time": {
+      "type": "string"
+    },
+    "estimated_delivery_time": {
+      "type": "string"
+    },
+    "estimated_minutes": {
+      "type": "number"
+    },
+    "preparation_minutes": {
+      "type": "number"
+    },
+    "total_amount": {
+      "type": "number"
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "delivery_fee": {
+      "type": "number"
+    },
+    "service_charge": {
+      "type": "number"
+    },
+    "rider_tip": {
+      "type": "number"
+    },
+    "taxes": {
+      "type": "number"
+    },
+    "discount": {
+      "type": "number"
+    },
+    "coupon_code": {
+      "type": "string"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "payment_status": {
+      "type": "string",
+      "default": "pending"
+    },
+    "contact_number": {
+      "type": "string"
+    },
+    "delivery_type": {
+      "type": "string",
+      "default": "instant"
+    },
+    "scheduled_time": {
+      "type": "string"
+    },
+    "delivery_instructions": {
+      "type": "string"
+    },
+    "rider_rating": {
+      "type": "number"
+    },
+    "merchant_rating": {
+      "type": "number"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "delivery_otp": {
+      "type": "string"
+    },
+    "delivery_proof_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_number"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.rider_id": "{{user.id}}"
+            },
+            {
+              "user_condition": {
+                "role": "rider"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.store_id": "{{user.store_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "merchant"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.rider_id": "{{user.id}}"
+            },
+            {
+              "user_condition": {
+                "role": "rider"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.store_id": "{{user.store_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "merchant"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

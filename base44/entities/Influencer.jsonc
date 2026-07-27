@@ -1,0 +1,85 @@
+{
+  "name": "Influencer",
+  "type": "object",
+  "properties": {
+    "influencer_name": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "instagram",
+        "facebook",
+        "tiktok",
+        "youtube",
+        "twitter",
+        "other"
+      ],
+      "default": "instagram"
+    },
+    "referral_code": {
+      "type": "string"
+    },
+    "commission_percentage": {
+      "type": "number",
+      "default": 5
+    },
+    "followers_count": {
+      "type": "number"
+    },
+    "contact_number": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "conversions": {
+      "type": "number",
+      "default": 0
+    },
+    "total_revenue": {
+      "type": "number",
+      "default": 0
+    },
+    "earnings": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "suspended"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "influencer_name",
+    "platform",
+    "referral_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

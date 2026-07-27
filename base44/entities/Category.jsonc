@@ -1,0 +1,77 @@
+{
+  "name": "Category",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "parent_category_id": {
+      "type": "string",
+      "description": "Parent category ID for child categories. NULL = parent category."
+    },
+    "industry_group": {
+      "type": "string",
+      "description": "food, grocery, fashion, electronics, beauty, health, home, pets, gifts, books, auto, sports, toys"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Emoji or icon identifier"
+    },
+    "image": {
+      "type": "string",
+      "description": "Category icon image URL"
+    },
+    "banner_url": {
+      "type": "string",
+      "description": "Category banner image URL"
+    },
+    "color_gradient": {
+      "type": "string",
+      "description": "Tailwind gradient classes for UI cards"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "store_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

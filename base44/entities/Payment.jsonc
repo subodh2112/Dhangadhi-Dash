@@ -1,0 +1,114 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "payment_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "order_number": {
+      "type": "string"
+    },
+    "checkout_group_id": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "cod",
+        "esewa",
+        "khalti",
+        "fonepay",
+        "card",
+        "wallet",
+        "bank_transfer"
+      ]
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "successful",
+        "failed",
+        "refunded",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "transaction_reference": {
+      "type": "string"
+    },
+    "payment_date": {
+      "type": "string"
+    },
+    "gateway_response": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id",
+    "amount",
+    "payment_method"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.order_id": {
+                "$in": [
+                  "{{user.store_id}}",
+                  "{{user.rider_id}}"
+                ]
+              }
+            },
+            {
+              "user_condition": {
+                "role": {
+                  "$in": [
+                    "merchant",
+                    "rider"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

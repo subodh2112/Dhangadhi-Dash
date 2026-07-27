@@ -1,0 +1,46 @@
+{
+  "name": "Merchant Order Notification",
+  "description": "Automatically sends a notification to the merchant when a new order is placed for their store.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Order",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.status == \"pending\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "merchant_order_notification",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "notify_merchant": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "notify_merchant_new_order",
+            "args": {
+              "order_id": "${ .trigger.entity_id }",
+              "store_id": "${ .trigger.data.store_id }",
+              "merchant_id": "${ .trigger.data.merchant_id }",
+              "order_number": "${ .trigger.data.order_number }",
+              "customer_name": "${ .trigger.data.customer_name }",
+              "total_amount": "${ .trigger.data.total_amount }",
+              "items": "${ .trigger.data.items }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Notify Merchant",
+            "description": "Send new order notification"
+          }
+        }
+      }
+    ]
+  }
+}

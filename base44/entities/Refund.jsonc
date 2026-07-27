@@ -1,0 +1,93 @@
+{
+  "name": "Refund",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "order_number": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "store_name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "missing_item",
+        "wrong_item",
+        "order_issue",
+        "merchant_cancellation",
+        "delivery_problem",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "requested",
+        "under_review",
+        "approved",
+        "rejected",
+        "completed"
+      ],
+      "default": "requested"
+    },
+    "admin_note": {
+      "type": "string"
+    },
+    "requested_date": {
+      "type": "string"
+    },
+    "processed_date": {
+      "type": "string"
+    },
+    "refund_method": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id",
+    "amount",
+    "reason"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

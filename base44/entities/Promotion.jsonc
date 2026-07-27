@@ -1,0 +1,118 @@
+{
+  "name": "Promotion",
+  "type": "object",
+  "properties": {
+    "merchant_id": {
+      "type": "string"
+    },
+    "store_id": {
+      "type": "string"
+    },
+    "store_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "promo_type": {
+      "type": "string",
+      "enum": [
+        "percentage",
+        "fixed",
+        "bogo",
+        "free_delivery",
+        "featured",
+        "sponsored"
+      ],
+      "default": "percentage"
+    },
+    "discount_value": {
+      "type": "number"
+    },
+    "code": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "min_order_amount": {
+      "type": "number"
+    },
+    "usage_limit": {
+      "type": "number"
+    },
+    "used_count": {
+      "type": "number",
+      "default": 0
+    },
+    "advertising_fee": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "merchant_id",
+    "title",
+    "promo_type",
+    "discount_value"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.merchant_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "data.merchant_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.merchant_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

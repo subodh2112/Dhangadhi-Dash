@@ -1,0 +1,75 @@
+{
+  "name": "MarketingTemplate",
+  "type": "object",
+  "properties": {
+    "template_name": {
+      "type": "string"
+    },
+    "template_type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "push_notification"
+      ],
+      "default": "email"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "welcome",
+        "otp",
+        "order_update",
+        "promotion",
+        "festival",
+        "receipt",
+        "inactive_reengagement"
+      ],
+      "default": "promotion"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "variables": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "template_name",
+    "template_type",
+    "body"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "name": "Rider",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "rider_code": {
+      "type": "string"
+    },
+    "vehicle_type": {
+      "type": "string",
+      "enum": [
+        "bicycle",
+        "motorcycle",
+        "scooter",
+        "electric_scooter",
+        "electric_bike",
+        "car",
+        "van"
+      ],
+      "default": "motorcycle"
+    },
+    "vehicle_number": {
+      "type": "string"
+    },
+    "number_plate": {
+      "type": "string",
+      "description": "Vehicle number plate"
+    },
+    "license_number": {
+      "type": "string"
+    },
+    "license_front_url": {
+      "type": "string"
+    },
+    "license_back_url": {
+      "type": "string"
+    },
+    "vehicle_bluebook_url": {
+      "type": "string",
+      "description": "Vehicle registration bluebook photo"
+    },
+    "insurance_url": {
+      "type": "string",
+      "description": "Vehicle insurance document (optional, admin-configurable)"
+    },
+    "address": {
+      "type": "string"
+    },
+    "emergency_contact": {
+      "type": "string"
+    },
+    "profile_photo_url": {
+      "type": "string"
+    },
+    "vehicle_documents_url": {
+      "type": "string"
+    },
+    "kyc_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "license_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "not_required"
+      ],
+      "default": "pending"
+    },
+    "vehicle_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "not_required"
+      ],
+      "default": "pending"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "on_delivery",
+        "busy",
+        "on_break",
+        "offline"
+      ],
+      "default": "available"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "total_deliveries": {
+      "type": "number"
+    },
+    "total_earnings": {
+      "type": "number"
+    },
+    "area": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "is_suspended": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "UserSegment",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "segment_type": {
+      "type": "string",
+      "enum": [
+        "new_user",
+        "active_user",
+        "inactive_user",
+        "high_value_user"
+      ],
+      "default": "new_user"
+    },
+    "total_orders": {
+      "type": "number",
+      "default": 0
+    },
+    "total_spent": {
+      "type": "number",
+      "default": 0
+    },
+    "avg_order_value": {
+      "type": "number",
+      "default": 0
+    },
+    "last_order_date": {
+      "type": "string"
+    },
+    "days_since_last_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_high_value": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "user_id",
+    "segment_type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

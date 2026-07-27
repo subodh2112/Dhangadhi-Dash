@@ -1,0 +1,97 @@
+{
+  "name": "Withdrawal",
+  "type": "object",
+  "properties": {
+    "rider_id": {
+      "type": "string"
+    },
+    "rider_name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "bank_transfer",
+        "esewa",
+        "khalti",
+        "cash"
+      ]
+    },
+    "account_details": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "paid"
+      ],
+      "default": "pending"
+    },
+    "requested_date": {
+      "type": "string"
+    },
+    "processed_date": {
+      "type": "string"
+    },
+    "admin_note": {
+      "type": "string"
+    },
+    "transaction_reference": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "rider_id",
+    "amount",
+    "payment_method"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.rider_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.rider_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.rider_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

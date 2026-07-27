@@ -1,0 +1,40 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "airtable_order_sync",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_to_airtable": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sync_order_to_airtable",
+            "args": {
+              "order_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sync order to Airtable",
+            "description": "Creates a record in the team base"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Airtable Order Sync",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "Order"
+    }
+  },
+  "description": "Syncs new orders to the Airtable team base automatically when an order is created"
+}

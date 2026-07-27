@@ -1,0 +1,47 @@
+{
+  "description": "Posts a message to Slack #general when a new support ticket is created",
+  "name": "Slack Support Ticket Notification",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "slack_ticket_notification",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "notify_slack": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "notify_slack_ticket",
+            "args": {
+              "ticket": {
+                "subject": "${ .trigger.data.subject }",
+                "description": "${ .trigger.data.description }",
+                "priority": "${ .trigger.data.priority }",
+                "category": "${ .trigger.data.category }",
+                "user_name": "${ .trigger.data.user_name }",
+                "ticket_id": "${ .trigger.data.ticket_id }"
+              }
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Notify Slack",
+            "description": "Post ticket to #general"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "SupportTicket"
+    }
+  }
+}

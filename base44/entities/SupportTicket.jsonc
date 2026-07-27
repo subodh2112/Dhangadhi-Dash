@@ -1,0 +1,154 @@
+{
+  "name": "SupportTicket",
+  "type": "object",
+  "properties": {
+    "ticket_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_type": {
+      "type": "string",
+      "enum": [
+        "customer",
+        "merchant",
+        "rider",
+        "admin"
+      ],
+      "default": "customer"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "order_issue",
+        "payment_issue",
+        "refund",
+        "rider_issue",
+        "merchant_issue",
+        "technical_problem",
+        "account_problem",
+        "other"
+      ],
+      "default": "other"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "attachments": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "in_progress",
+        "waiting",
+        "resolved",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "assigned_agent_id": {
+      "type": "string"
+    },
+    "admin_reply": {
+      "type": "string"
+    },
+    "related_order_id": {
+      "type": "string"
+    },
+    "order_context": {
+      "type": "string",
+      "description": "JSON snapshot of order details when contacting from an order"
+    },
+    "escalated": {
+      "type": "boolean",
+      "default": false
+    },
+    "escalated_to_admin": {
+      "type": "boolean",
+      "default": false
+    },
+    "callback_scheduled": {
+      "type": "boolean",
+      "default": false
+    },
+    "callback_time": {
+      "type": "string"
+    },
+    "resolved_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "subject",
+    "description"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "support_agent"
+          }
+        },
+        {
+          "data.assigned_agent_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "support_agent"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

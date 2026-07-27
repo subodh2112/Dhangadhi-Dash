@@ -1,0 +1,81 @@
+{
+  "name": "AIConversation",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "conversation_type": {
+      "type": "string",
+      "enum": [
+        "support",
+        "search",
+        "voice_order",
+        "recommendation"
+      ],
+      "default": "support"
+    },
+    "messages": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "resolved",
+        "escalated"
+      ],
+      "default": "active"
+    },
+    "related_ticket_id": {
+      "type": "string"
+    },
+    "ai_resolution": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "conversation_type"
+  ],
+  "rls": {
+    "create": {
+      "data.user_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

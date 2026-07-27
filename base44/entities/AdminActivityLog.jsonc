@@ -1,0 +1,85 @@
+{
+  "name": "AdminActivityLog",
+  "type": "object",
+  "properties": {
+    "staff_id": {
+      "type": "string"
+    },
+    "staff_name": {
+      "type": "string"
+    },
+    "staff_role": {
+      "type": "string",
+      "description": "Display name of the staff role e.g. Marketing Manager"
+    },
+    "action": {
+      "type": "string",
+      "description": "What the staff member did e.g. Created coupon SAVE20"
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "users",
+        "merchants",
+        "riders",
+        "orders",
+        "payments",
+        "finance",
+        "marketing",
+        "operations",
+        "support",
+        "settings",
+        "staff",
+        "security",
+        "analytics",
+        "system"
+      ],
+      "default": "system"
+    },
+    "details": {
+      "type": "string"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical"
+      ],
+      "default": "info"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "staff_id",
+    "action",
+    "module"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

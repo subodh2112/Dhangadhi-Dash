@@ -1,0 +1,74 @@
+{
+  "name": "AdminRole",
+  "type": "object",
+  "properties": {
+    "role_name": {
+      "type": "string",
+      "description": "Unique key e.g. marketing_manager"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable label e.g. Marketing Manager"
+    },
+    "description": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string",
+      "enum": [
+        "super_admin",
+        "operations",
+        "marketing",
+        "finance",
+        "support",
+        "merchant_relations",
+        "rider_relations",
+        "analytics"
+      ],
+      "default": "analytics"
+    },
+    "permissions": {
+      "type": "string",
+      "description": "JSON array of permission keys"
+    },
+    "is_system_role": {
+      "type": "boolean",
+      "default": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "role_name",
+    "display_name",
+    "permissions"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

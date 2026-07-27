@@ -1,0 +1,97 @@
+{
+  "name": "MerchantWallet",
+  "type": "object",
+  "properties": {
+    "merchant_id": {
+      "type": "string"
+    },
+    "store_id": {
+      "type": "string"
+    },
+    "store_name": {
+      "type": "string"
+    },
+    "total_sales": {
+      "type": "number",
+      "default": 0
+    },
+    "commission_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "available_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "withdrawn_amount": {
+      "type": "number",
+      "default": 0
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.1
+    },
+    "last_updated": {
+      "type": "string"
+    },
+    "bank_name": {
+      "type": "string",
+      "description": "Linked bank name e.g. Nepal Bank, NIC Asia"
+    },
+    "bank_account_holder": {
+      "type": "string",
+      "description": "Account holder name as per bank records"
+    },
+    "bank_account_number": {
+      "type": "string",
+      "description": "Bank account number for payouts"
+    },
+    "bank_branch": {
+      "type": "string",
+      "description": "Bank branch location"
+    },
+    "bank_linked": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "merchant_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.merchant_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.merchant_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

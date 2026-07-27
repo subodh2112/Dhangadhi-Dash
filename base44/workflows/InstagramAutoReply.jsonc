@@ -1,0 +1,44 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "instagram_auto_reply",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "auto_reply": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "instagram_auto_reply"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Auto-reply to comments",
+            "description": "Replies to unreplied comments on business posts"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Instagram Auto-Reply",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "*/30 * * * *",
+      "one_time_date": null,
+      "timezone": "Asia/Katmandu",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "description": "Polls Instagram Business posts every 30 minutes and auto-replies to unreplied customer comments"
+}

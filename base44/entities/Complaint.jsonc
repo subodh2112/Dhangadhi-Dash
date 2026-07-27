@@ -1,0 +1,105 @@
+{
+  "name": "Complaint",
+  "type": "object",
+  "properties": {
+    "complaint_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "order_number": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "store_name": {
+      "type": "string"
+    },
+    "complaint_type": {
+      "type": "string",
+      "enum": [
+        "missing_item",
+        "wrong_item",
+        "food_quality",
+        "late_delivery",
+        "rider_behavior",
+        "payment_issue",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "photo_urls": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "under_review",
+        "investigating",
+        "resolved",
+        "rejected"
+      ],
+      "default": "submitted"
+    },
+    "resolution": {
+      "type": "string"
+    },
+    "admin_note": {
+      "type": "string"
+    },
+    "refund_amount": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "complaint_type",
+    "description"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.store_name": "{{user.store_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "merchant"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

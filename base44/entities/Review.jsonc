@@ -1,0 +1,92 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "target_type": {
+      "type": "string",
+      "enum": [
+        "product",
+        "store"
+      ],
+      "default": "product"
+    },
+    "target_id": {
+      "type": "string",
+      "description": "ID of the product or store being reviewed"
+    },
+    "target_name": {
+      "type": "string"
+    },
+    "store_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "message": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "is_verified_purchase": {
+      "type": "boolean",
+      "default": true
+    },
+    "merchant_reply": {
+      "type": "string"
+    },
+    "helpful_votes": {
+      "type": "number"
+    },
+    "order_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_name",
+    "rating",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.store_id": "{{user.store_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "merchant"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
