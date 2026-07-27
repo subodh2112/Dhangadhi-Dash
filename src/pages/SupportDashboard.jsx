@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PullToRefresh from "@/components/PullToRefresh";
-import SupportChat from "@/components/support/SupportChat";
+import SupportChat from "@/components/support/SupportChat.jsx";
 import AgentCallPanel from "@/components/support/AgentCallPanel";
 import { endSupportCall, escalateTicket, assignTicket, resolveTicket } from "@/lib/support";
 import { Phone, PhoneOff, MessageSquare, Ticket, History, Loader2, ChevronRight, ArrowUpCircle, CheckCircle, Clock, User } from "lucide-react";
