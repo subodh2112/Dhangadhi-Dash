@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import StoreManager from "@/components/admin/StoreManager";
 import ProductManager from "@/components/admin/ProductManager";
 import RiderManager from "@/components/admin/RiderManager";
-import CouponManager from "@/components/admin/CouponManager.jsx";
+import CouponManager from "../components/admin/CouponManager.jsx";
 import AdminOverview from "@/components/admin/AdminOverview";
 import ApplicationManager from "@/components/admin/ApplicationManager";
 import CustomerControlPanel from "@/components/admin/CustomerControlPanel";
