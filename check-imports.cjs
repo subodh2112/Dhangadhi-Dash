@@ -13,26 +13,36 @@ function walk(dir, files=[]) {
   return files;
 }
 
-function existsCaseSensitive(filePath) {
-  const dir = path.dirname(filePath);
-  const base = path.basename(filePath);
-  if (!fs.existsSync(dir)) return false;
-  const entries = fs.readdirSync(dir);
-  return entries.includes(base);
+function existsFullPathCaseSensitive(absPath) {
+  const parts = absPath.split(path.sep).filter(Boolean);
+  let current = path.sep;
+  for (const part of parts) {
+    if (!fs.existsSync(current)) return false;
+    const entries = fs.readdirSync(current);
+    if (!entries.includes(part)) return false;
+    current = path.join(current, part);
+  }
+  return true;
 }
 
 function resolveImport(fromFile, importPath) {
-  const baseDir = path.dirname(fromFile);
-  const resolved = path.resolve(baseDir, importPath);
+  let resolved;
+  if (importPath.startsWith('@/')) {
+    resolved = path.join(SRC, importPath.slice(2));
+  } else if (importPath.startsWith('.')) {
+    resolved = path.resolve(path.dirname(fromFile), importPath);
+  } else {
+    return true;
+  }
   const candidates = [resolved, ...exts.map(e => resolved + e)];
   for (const c of candidates) {
-    if (existsCaseSensitive(c)) return true;
+    if (existsFullPathCaseSensitive(c)) return true;
   }
   return false;
 }
 
 const files = walk(SRC);
-const importRegex = /(?:from\s+|import\s*\(\s*)['"](\.[^'"]*)['"]/g;
+const importRegex = /(?:from\s+|import\s*\(\s*)['"](@\/[^'"]*|\.[^'"]*)['"]/g;
 let problems = [];
 
 for (const file of files) {
@@ -47,9 +57,9 @@ for (const file of files) {
 }
 
 if (problems.length === 0) {
-  console.log('No broken relative imports found.');
+  console.log('No broken imports found (relative + @/ alias).');
 } else {
-  console.log(`Found ${problems.length} broken relative import(s):\n`);
+  console.log(`Found ${problems.length} broken import(s):\n`);
   for (const p of problems) {
     console.log(`${p.file}\n  -> imports "${p.importPath}" (not found, case-sensitive)\n`);
   }
